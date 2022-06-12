@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "0YZ49Bq5Uv/razT+h5SOGMVemYR8jr/HpjHpDDE0gWqlSgBObpHkJ7zZDuO4PYByJ4cUGFtS+pFqMaTO16+T9g==",
+  "success": true,
+  "projectFilePath": "/home/konstantin/Work/TILab4Var1/TILab4Var1/TILab4Var1.csproj",
+  "expectedPackageFiles": [
+    "/home/konstantin/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.2/microsoft.aspnetcore.app.ref.6.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

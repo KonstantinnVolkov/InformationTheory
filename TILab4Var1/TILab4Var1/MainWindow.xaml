@@ -1,0 +1,46 @@
+﻿<Window x:Class="TILab4Var1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TILab4Var1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550px" Width="1000">
+    <Grid Background="#ffc3a0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.05*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label FontSize="20px" Content="INPUT DATA"/>
+            <Label Content="p(prime)"/>
+            <TextBox FontSize="20px" x:Name="PInput"/>
+            <Label Content="q(prime)"/>
+            <TextBox FontSize="20px" x:Name="QInput"/>
+            <Label Content="Kc(closed key)"/>
+            <TextBox FontSize="20px" x:Name="KcInput"/>
+            <Label Content="File for signature"/>
+            <TextBox FontSize="20px" x:Name="FileToSignInput"/>
+            <Label Content="Signatured file"/>
+            <TextBox FontSize="20px" x:Name="SignedFileInput"/>
+            <Button FontSize="20px" Content="Sign" Margin="20 10 20 10" Click="SignFile" Height="38"/>
+            <Label Content="Signatured file"/>
+            <TextBox FontSize="20px" x:Name="FileToCheckSignInput"/>
+            <Button FontSize="20px" Content="Check sign" Margin="20 10 20 10" Click="CheckFileSign" Height="49"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <Label FontSize="20px" Content="Output data"/>
+            <Label Content="Ko(open key)"/>
+            <TextBox FontSize="20px" x:Name="KoOutput"/>
+            <Label Content="Initial hash image"/>
+            <TextBox FontSize="20px" x:Name="HashSignOutput"/>
+            <Label FontStyle="Italic" Content="Sign Value"/>
+            <TextBox FontSize="20px" x:Name="SOutput"/>
+            <Label Content="Hash image of the transmitted message"/>
+            <TextBox FontSize="20px" x:Name="HashCheckSignedOutput"/>
+            <Label Content="Hash image, calculated by formula"/>
+            <TextBox FontSize="20px" x:Name="HashViaFormulaOutput"/>
+        </StackPanel>
+    </Grid>
+</Window>

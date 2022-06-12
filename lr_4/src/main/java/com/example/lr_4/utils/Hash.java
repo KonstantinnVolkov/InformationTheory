@@ -7,7 +7,7 @@ public class Hash {
     private static String RUS_ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
     private static String EN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public static BigInteger hashFunc (BigInteger p, BigInteger q, BigInteger r, String message) {
+    public static BigInteger hashFunc (BigInteger r, String message) {
         message = message.toUpperCase();
         BigInteger hash = new BigInteger("100");
         for (int i = 0; i < message.length(); i++) {

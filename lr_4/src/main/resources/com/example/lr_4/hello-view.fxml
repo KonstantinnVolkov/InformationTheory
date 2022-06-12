@@ -52,9 +52,9 @@
             </TextField>
          </children>
       </Pane>
-      <Pane layoutX="880.0" layoutY="22.0" prefHeight="233.0" prefWidth="366.0">
+      <Pane layoutX="800.0" layoutY="22.0" prefHeight="233.0" prefWidth="463.0">
          <children>
-            <TextField fx:id="hashTF" editable="false" layoutX="161.0" layoutY="34.0" prefHeight="30.0" prefWidth="181.0" promptText="Hash">
+            <TextField fx:id="hashTF" editable="false" layoutX="245.0" layoutY="34.0" prefHeight="30.0" prefWidth="181.0" promptText="Hash">
                <font>
                   <Font size="14.0" />
                </font>
@@ -65,27 +65,39 @@
                </font>
             </Label>
             <TextField fx:id="PQ_TF" editable="false" layoutX="21.0" layoutY="35.0" prefHeight="25.0" prefWidth="79.0" />
-            <Label layoutX="161.0" layoutY="17.0" text="Hi = f(Hi-1, Mi)">
+            <Label layoutX="245.0" layoutY="17.0" text="Hi = f(Hi-1, Mi)">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="EDS_TF" editable="false" layoutX="161.0" layoutY="93.0" prefHeight="30.0" prefWidth="181.0" promptText="Electronic digital signature">
+            <TextField fx:id="EDS_TF" editable="false" layoutX="245.0" layoutY="93.0" prefHeight="30.0" prefWidth="181.0" promptText="Electronic digital signature">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Label layoutX="161.0" layoutY="76.0" text="EDS">
+            <Label layoutX="245.0" layoutY="76.0" text="EDS">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <TextField fx:id="eulerFuncTF" layoutX="19.0" layoutY="94.0" />
+            <Label layoutX="22.0" layoutY="76.0" text="Euler func" />
          </children>
       </Pane>
-      <Button fx:id="encodeBtn" layoutX="1073.0" layoutY="586.0" mnemonicParsing="false" onAction="#encodeAct" prefHeight="48.0" prefWidth="87.0" text="Confirm">
+      <Button fx:id="signFileBtn" layoutX="948.0" layoutY="450.0" mnemonicParsing="false" onAction="#SignFileAct" prefHeight="39.0" prefWidth="91.0" text="Sign file">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <Button fx:id="checkSignBtn" layoutX="948.0" layoutY="498.0" mnemonicParsing="false" onAction="#CheckSignAct" prefHeight="39.0" prefWidth="91.0" text="Check sign">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="EDSStatusLbl" layoutX="1079.0" layoutY="509.0" text="EDS status:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -1,29 +1,23 @@
 package com.example.lr_4;
 
 import com.example.lr_4.utils.Hash;
-import com.example.lr_4.utils.keys.ClosedKey;
-import com.example.lr_4.utils.keys.OpenedKey;
 import com.example.lr_4.utils.RSA_EDS;
+import com.example.lr_4.utils.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 
 public class HelloController {
 
-    private final String PATH_TO_FILES = "D:\\My_projects\\Лабы\\4 сем\\ТИ\\lr_4\\src\\main\\resources\\files\\";
-    private final String CLOSED_KEY_ERROR = "Wrong closed key!";
+//    private final String PATH_TO_FILES = "D:\\My_projects\\Лабы\\4 сем\\ТИ\\lr_4\\src\\main\\resources\\files\\";
+    private final String PATH_TO_FILES = "/home/konstantin/Work/Labs/TI/InformationTheory/lr_4/src/main/resources/files";
+    private final String INVALID_INPUT_ERR = "Invalid input!";
 
     BigInteger p;
     BigInteger q;
@@ -49,6 +43,9 @@ public class HelloController {
     private TextField Q_TF;
 
     @FXML
+    private TextField eulerFuncTF;
+
+    @FXML
     private Button chooseFileBTN;
 
     @FXML
@@ -61,19 +58,65 @@ public class HelloController {
     private TextField privateKeyTF;
 
     @FXML
-    private Button encodeBtn;
+    private Button signFileBtn;
 
     @FXML
-    void encodeAct(ActionEvent event) {
-        p = new BigInteger(P_TF.getText());
-        q = new BigInteger(Q_TF.getText());
+    private Button checkSignBtn;
+
+    @FXML
+    private Label EDSStatusLbl;
+
+    @FXML
+    void SignFileAct(ActionEvent event) {
+        p = new BigInteger(P_TF.getText().trim());
+        q = new BigInteger(Q_TF.getText().trim());
+        BigInteger closedKey = new BigInteger(privateKeyTF.getText().trim());
         r = p.multiply(q);
-        if (!fileData.isEmpty()) {
-            BigInteger hashImage = Hash.hashFunc(p, q , r, fileData.toString()); //step 1: find hash image m of M message
-            BigInteger eulerFuncResult = RSA_EDS.eulerFunction(p, q); //step 2: find euler function of p and q
-            BigInteger closedKey = new BigInteger(privateKeyTF.getText()); //step 3: find closed key
-        }
+        BigInteger eulerFuncResult = RSA_EDS.eulerFunction(p, q);
         PQ_TF.setText(r.toString());
+        eulerFuncTF.setText(eulerFuncResult.toString());
+        if (Validator.validate(p, q, closedKey, eulerFuncResult) != "OK") {
+            showError(Validator.validate(p, q, closedKey, eulerFuncResult));
+            return;
+        }
+        if (!fileData.isEmpty()) {
+            BigInteger hashImage = Hash.hashFunc(r, fileData.toString()); //step 1: find hash image m of M message
+            BigInteger EDS = RSA_EDS.EDS(hashImage, closedKey, r);  //step 4: find EDS
+            hashTF.setText(hashImage.toString());
+            EDS_TF.setText(EDS.toString());
+
+            String signedFileData = fileData.toString() + " " + EDS.toString();
+            //write to file
+            try (FileWriter fw = new FileWriter(PATH_TO_FILES + "/signedFile.txt")) {
+                fw.write("");
+                fw.write(signedFileData);
+                fw.flush();
+            }
+            catch (IOException e) {
+                showError(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    void CheckSignAct(ActionEvent event) {
+        String signedFileData = new String(fileData.toString());
+        String message = signedFileData.split(" ")[0];
+        BigInteger sign = new BigInteger(signedFileData.split(" ")[1]);
+        p = new BigInteger(P_TF.getText().trim());
+        q = new BigInteger(Q_TF.getText().trim());
+        BigInteger eulerFuncResult = RSA_EDS.eulerFunction(p, q);
+        BigInteger closedKey = new BigInteger(privateKeyTF.getText().trim());
+        if (!fileData.isEmpty()) {
+            BigInteger hashImage = Hash.hashFunc(p, fileData.toString()); //step 1: find hash image m of M message
+            BigInteger openedKey = RSA_EDS.getOpenedKey(eulerFuncResult, closedKey);
+            if (RSA_EDS.checkEDS(r, hashImage, openedKey, sign, message) == true) {
+                EDSStatusLbl.setText("Sign is valid");
+            }
+            else {
+                EDSStatusLbl.setText("Sign is invalid");
+            }
+        }
     }
 
     @FXML
